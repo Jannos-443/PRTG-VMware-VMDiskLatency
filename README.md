@@ -39,6 +39,7 @@ Using VMWare PowerCLI this Script checks VMware VM Disk Latency
 
 ## Examples
 ![PRTG-VMware-VMDiskLatency](media/test.png)
+![PRTG-VMware-VMDiskLatency](media/stats.png)
 
 VM exceptions
 ------------------
