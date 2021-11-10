@@ -20,7 +20,7 @@ Using VMWare PowerCLI this Script checks VMware VM Disk Latency
 
    | Settings | Value |
    | --- | --- |
-   | EXE/Script | PRTG-VMware-VMDiskLatency.ps1 |
+   | EXE/Script Advanced | PRTG-VMware-VMDiskLatency.ps1 |
    | Parameters | -ViServer 'yourVCenter' -User 'yourUser' -Password 'yourPassword' |
    | Scanning Interval | 15 minutes |
 
