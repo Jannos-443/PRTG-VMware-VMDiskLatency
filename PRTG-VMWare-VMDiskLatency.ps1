@@ -87,19 +87,33 @@ trap{
 #If Powershell is running the 32-bit version on a 64-bit machine, we 
 #need to force powershell to run in 64-bit mode .
 #############################################################################
-if ($env:PROCESSOR_ARCHITEW6432 -eq "AMD64") {
-    #Write-warning  "Y'arg Matey, we're off to 64-bit land....."
-    if ($myInvocation.Line) {
-        &"$env:WINDIR\sysnative\windowspowershell\v1.0\powershell.exe" -NonInteractive -NoProfile $myInvocation.Line
-    }else{
-        &"$env:WINDIR\sysnative\windowspowershell\v1.0\powershell.exe" -NonInteractive -NoProfile -file "$($myInvocation.InvocationName)" $args
+if ($env:PROCESSOR_ARCHITEW6432 -eq "AMD64") 
+    {
+    if ($myInvocation.Line) 
+        {
+        [string]$output = &"$env:WINDIR\sysnative\windowspowershell\v1.0\powershell.exe" -NonInteractive -NoProfile $myInvocation.Line
+        }
+    else
+        {
+        [string]$output = &"$env:WINDIR\sysnative\windowspowershell\v1.0\powershell.exe" -NonInteractive -NoProfile -file "$($myInvocation.InvocationName)" $args
+        }
+
+    #Remove any text after </prtg>
+    try{
+        $output = $output.Substring(0,$output.LastIndexOf("</prtg>")+7)
+        }
+
+    catch
+        {
+        }
+
+    Write-Output $output
+    exit
     }
-exit $lastexitcode
-}
 
 #############################################################################
 #End
-#############################################################################    
+#############################################################################     
 
 $connected = $false
 
@@ -331,14 +345,4 @@ if($ShowStats)
 
 $xmlOutput = $xmlOutput + "</prtg>"
 
-try
-    {
-    [Console]::OutputEncoding = [System.Text.Encoding]::UTF8
-    [Console]::WriteLine($xmlOutput)
-    #https://kb.paessler.com/en/topic/64817-how-can-i-show-special-characters-with-exe-script-sensors
-    }
-
-catch
-    {
-    $xmlOutput
-    }
+Write-Output $xmlOutput
