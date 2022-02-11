@@ -208,7 +208,10 @@ foreach($latency in $Latencys)
     
     if($max -gt $highestlatency)
         {
-        $highestlatency = $max
+        if($highestlatency -le 999999999)
+            {
+            $highestlatency = $max
+            }
         }
 
     if($avg -gt $highestAVGlatency)
